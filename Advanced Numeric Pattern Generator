@@ -1,0 +1,58 @@
+Advanced Numeric Pattern Generator
+Aim: Generate a hollow diamond numeric pattern based on the user's input and validate the dimensions.
+Algorithm
+1. Start.
+2. Enter the size of the diamond.
+3. Check whether the size is a positive integer.
+4. Print the upper half of the diamond using numbers and spaces.
+5. Print the lower half in reverse order.
+6. Display the complete hollow diamond.
+7. Stop.
+Flowchart
+Start
+↓
+Enter diamond size n
+↓
+Is n greater than 0?
+↓
+No
+↓
+Display invalid size
+
+Yes
+↓
+Print upper and lower halves
+
+
+Display numeric diamond
+↓
+Stop
+
+n = int(input("Enter diamond size: "))
+
+if n <= 0:
+    print("Invalid size. Enter a positive number.")
+else:
+    # Upper half
+    for i in range(1, n + 1):
+        print(" " * (n - i), end="")
+        if i == 1:
+            print("1")
+        else:
+            print("1" + " " * (2 * i - 3) + str(i))
+
+    # Lower half
+    for i in range(n - 1, 0, -1):
+        print(" " * (n - i), end="")
+        if i == 1:
+            print("1")
+        else:
+            print("1" + " " * (2 * i - 3) + str(i))
+Enter diamond size: 4
+   1
+  1 2
+ 1   3
+1     4
+ 1   3
+  1 2
+   1

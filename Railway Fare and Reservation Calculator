@@ -1,0 +1,122 @@
+## 1. Algorithm: Railway Fare and Reservation Calculator
+
+1. Start
+2. Enter the number of passengers.
+3. Read passenger name, age, distance, and travel class.
+4. Calculate the fare based on distance:
+   - Distance ≤ 100 km: Rate = ₹1 per km
+   - Distance ≤ 500 km: Rate = ₹2 per km
+   - Distance > 500 km: Rate = ₹3 per km
+5. Calculate the class fare:
+   - Sleeper: Class rate = 1, reservation fee = ₹20
+   - AC: Class rate = 2, reservation fee = ₹50
+6. Calculate the base fare using distance, rate, and class rate.
+7. Apply the age concession:
+   - Below 5 years: Fare and reservation fee are zero.
+   - 60 years or above: Apply a 20% fare concession.
+8. Add the reservation fee to calculate the total fare.
+9. Ask whether the ticket should be cancelled.
+10. If cancelled, calculate a 25% penalty and the refund amount.
+11. Display the fare, penalty, and refund.
+12. Repeat for all passengers.
+13. Stop
+
+## 2. Flowchart
+
+START
+   ↓
+Enter number of passengers
+              ↓
+Enter name, age, distance and class
+              ↓
+Calculate distance-based and class fare
+            ↓
+Apply age concession and reservation fee
+              ↓
+Display total fare
+            ↓
+Cancel ticket?
+
+YES
+ ↓
+Calculate penalty and refund
+
+NO
+↓
+Keep ticket confirmed
+
+Process next passenger, if any
+↓
+STOP
+
+# Railway Fare and Reservation Calculator
+
+n = int(input("Enter number of passengers: "))
+
+for i in range(1, n + 1):
+    print("\nPassenger", i)
+
+    name = input("Enter passenger name: ")
+    age = int(input("Enter age: "))
+    distance = int(input("Enter distance in km: "))
+
+    print("Classes: 1. Sleeper  2. AC")
+    cls = int(input("Select class (1 or 2): "))
+
+    # Distance-based fare
+    if distance <= 100:
+        rate = 1
+    elif distance <= 500:
+        rate = 2
+    else:
+        rate = 3
+
+    # Class charges
+    if cls == 1:
+        class_rate = 1
+        reservation_fee = 20
+    else:
+        class_rate = 2
+        reservation_fee = 50
+
+    fare = distance * rate * class_rate
+
+    # Age-based concession
+    if age < 5:
+        fare = 0
+        reservation_fee = 0
+    elif age >= 60:
+        fare = fare * 0.8
+
+    total = fare + reservation_fee
+
+    print("\n--- Ticket Details ---")
+    print("Name:", name)
+    print("Base Fare:", fare)
+    print("Reservation Fee:", reservation_fee)
+    print("Total Fare: Rs.", total)
+
+    cancel = input("Cancel ticket? (yes/no): ")
+
+    if cancel.lower() == "yes":
+        penalty = total * 0.25
+        refund = total - penalty
+        print("Cancellation Penalty: Rs.", penalty)
+        print("Refund Amount: Rs.", refund)
+Enter number of passengers: 1
+
+Passenger 1
+Enter passenger name: Ravi
+Enter age: 25
+Enter distance in km: 200
+Classes: 1. Sleeper  2. AC
+Select class (1 or 2): 1
+
+--- Ticket Details ---
+Name: Ravi
+Base Fare: 400
+Reservation Fee: 20
+Total Fare: Rs. 420
+Cancel ticket? (yes/no): yes
+Cancellation Penalty: Rs. 105.0
+Refund Amount: Rs. 315.0

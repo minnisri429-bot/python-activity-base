@@ -1,0 +1,76 @@
+Traffic Violation Penalty Calculator
+Algorithm
+1. Start.
+2. Enter the vehicle category and number of violations.
+3. For each violation, enter the offence type and whether it is a repeat offence.
+4. Calculate the fine using predefined rules.
+5. Add all fines to get the total penalty.
+6. Check whether the disqualification condition is met.
+7. Display the total penalty and disqualification status.
+8. Stop.
+Flowchart
+Start
+↓
+Enter vehicle category and violations
+↓
+Calculate fine for each offence
+ ↓
+Add fines and check repeat offences
+          ↓
+Disqualification condition met?
+Yes
+     ↓
+Display penalty and disqualified
+
+No
+↓
+Display penalty and not disqualified
+↓
+Stop
+
+fine_rules = {
+    "speeding": 1000,
+    "no_helmet": 500,
+    "signal_jump": 1500
+}
+
+total = 0
+repeat_count = 0
+
+vehicle = input("Enter vehicle category: ")
+n = int(input("Enter number of violations: "))
+
+for i in range(n):
+    offence = input("Enter offence (speeding/no_helmet/signal_jump): ").lower()
+    repeat = input("Repeat offence? (yes/no): ").lower()
+
+    if offence in fine_rules:
+        fine = fine_rules[offence]
+
+        if repeat == "yes":
+            fine = fine * 2
+            repeat_count += 1
+
+        total += fine
+        print("Fine:", fine)
+    else:
+        print("Invalid offence")
+
+print("Vehicle category:", vehicle)
+print("Total penalty:", total)
+
+if repeat_count >= 3:
+    print("Disqualification condition met")
+else:
+    print("No disqualification condition met")
+Enter vehicle category: Bike
+Enter number of violations: 2
+Enter offence (speeding/no_helmet/signal_jump): speeding
+Repeat offence? (yes/no): no
+Fine: 1000
+Enter offence (speeding/no_helmet/signal_jump): no_helmet
+Repeat offence? (yes/no): yes
+Fine: 1000
+Vehicle category: Bike
+Total penalty: 2000
+No disqualification condition met

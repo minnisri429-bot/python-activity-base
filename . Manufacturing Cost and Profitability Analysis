@@ -1,0 +1,88 @@
+1. Algorithm
+1. Start.
+2. Enter material cost, labour charges, wastage cost, and machine cost.
+3. Enter the number of products manufactured.
+4. Enter the selling price per product.
+5. Calculate the total manufacturing cost.
+6. Calculate the total sales amount.
+7. Calculate the profit or loss.
+8. Calculate the profit percentage.
+9. Enter the required profit target percentage.
+10. Check whether the actual profit percentage meets the target.
+11. Display the total cost, sales, profit or loss, and target result.
+12. Stop.
+2. Flowchart
+START
+
+Input material, labour, wastage and machine costs
+           ↓
+Input quantity, selling price and profit target
+              ↓
+Calculate total cost and total sales
+                ↓
+Calculate profit and profit percentage
+        ↓
+Profit target achieved?
+
+YES
+ ↓
+Display target achieved
+
+NO
+↓
+Display target not achieved
+
+
+STOP
+
+# Manufacturing Cost and Profitability Analysis
+
+material = float(input("Enter material cost: "))
+labour = float(input("Enter labour charges: "))
+wastage = float(input("Enter wastage cost: "))
+machine = float(input("Enter machine cost: "))
+
+quantity = int(input("Enter number of products: "))
+selling_price = float(input("Enter selling price per product: "))
+target = float(input("Enter profit target percentage: "))
+
+# Calculate total cost and sales
+total_cost = material + labour + wastage + machine
+total_sales = quantity * selling_price
+
+# Calculate profit or loss
+profit = total_sales - total_cost
+
+if total_cost > 0:
+    profit_percent = (profit / total_cost) * 100
+else:
+    profit_percent = 0
+
+# Display results
+print("\n--- Manufacturing Report ---")
+print("Total Cost:", total_cost)
+print("Total Sales:", total_sales)
+print("Profit/Loss:", profit)
+print("Profit Percentage:", profit_percent, "%")
+
+# Check profit target
+if profit >= 0 and profit_percent >= target:
+    print("Profit Target Achieved")
+else:
+    print("Profit Target Not Achieved") 
+    sample output
+Enter material cost: 5000
+Enter labour charges: 2000
+Enter wastage cost: 500
+Enter machine cost: 1500
+Enter number of products: 100
+Enter selling price per product: 120
+Enter profit target percentage: 20
+
+--- Manufacturing Report ---
+Total Cost: 9000.0
+Total Sales: 12000.0
+Profit/Loss: 3000.0
+Profit Percentage: 33.33333333333333 %
+
+Profit Target Achieved

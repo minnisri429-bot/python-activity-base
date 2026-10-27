@@ -1,0 +1,108 @@
+
+1. Algorithm
+1. Start.
+2. Enter the vehicle category: bike, car, or truck.
+3. Enter the parking entry time and exit time in HH:MM format.
+4. Validate the time inputs.
+5. If the exit time is earlier than the entry time, consider the parking to continue overnight.
+6. Calculate the total parking duration in hours.
+7. Calculate the parking fee based on the vehicle category.
+8. Add the overnight parking fee, if applicable.
+9. Apply the daily maximum charge.
+10. Add a penalty if the parking duration exceeds 24 hours.
+11. Display the total parking time and final fee.
+12. Stop.
+2. Flowchart
+START
+↓
+Enter vehicle category, entry time and exit time
+↓
+Are times valid?
+
+NO
+↓
+Display error message
+
+YES
+↓
+Calculate parking duration
+
+
+Calculate fee based on vehicle category
+↓
+Apply overnight charge and daily limit
+↓
+Check penalty conditions
+↓
+Display total fee
+↓
+STOP
+
+from datetime import datetime
+
+# Vehicle rates per hour
+rates = {"bike": 10, "car": 20, "truck": 30}
+
+# Daily maximum charges
+limits = {"bike": 100, "car": 200, "truck": 300}
+
+vehicle = input("Enter vehicle (bike/car/truck): ").lower()
+
+if vehicle not in rates:
+    print("Invalid vehicle category!")
+
+else:
+    entry = input("Enter entry time (HH:MM): ")
+    exit_time = input("Enter exit time (HH:MM): ")
+
+    try:
+        start = datetime.strptime(entry, "%H:%M")
+        end = datetime.strptime(exit_time, "%H:%M")
+
+        # Calculate duration, including overnight parking
+        if end <= start:
+            end = end.replace(day=2)
+
+        hours = (end - start).total_seconds() / 3600
+
+        # Charge for every started hour
+        billable_hours = int(hours)
+        if hours > billable_hours:
+            billable_hours += 1
+
+        fee = billable_hours * rates[vehicle]
+
+        # Overnight charge
+        overnight = end.date() > start.date()
+        if overnight:
+            fee += 50
+
+        # Apply daily maximum
+        fee = min(fee, limits[vehicle])
+
+        # Penalty for parking over 12 hours
+        penalty = 0
+        if hours > 12:
+            penalty = 100
+
+        total = fee + penalty
+
+        print("\n--- Parking Receipt ---")
+        print("Vehicle:", vehicle)
+        print("Duration:", hours, "hours")
+        print("Parking Fee: Rs.", fee)
+        print("Penalty: Rs.", penalty)
+        print("Total Fee: Rs.", total)
+
+    except ValueError:
+        print("Invalid time! Enter time in HH:MM format.")
+Enter vehicle (bike/car/truck): car
+Enter entry time (HH:MM): 20:00
+Enter exit time (HH:MM): 23:00
+
+--- Parking Receipt ---
+Vehicle: car
+Duration: 3.0 hours
+Parking Fee: Rs. 60
+Penalty: Rs. 0
+Total Fee: Rs. 60

@@ -1,0 +1,88 @@
+Laboratory Chemical Inventory Validation
+Algorithm
+1. Start.
+2. Enter the chemical name, storage category, and quantity.
+3. Check whether the quantity exceeds the permitted maximum.
+4. Check whether incompatible chemicals are stored together.
+5. Mark the inventory as valid or invalid.
+6. Display the validation results.
+7. Stop.
+Flowchart
+Start
+↓
+Enter chemical inventory records
+↓
+Check maximum quantity and storage category
+↓
+Quantity or compatibility violation?
+Yes
+↓
+Flag invalid record
+
+No
+↓
+Mark valid record
+
+
+Display results
+↓
+Stop
+
+# Hypothetical laboratory rules
+max_quantity = {
+    "flammable": 20,
+    "corrosive": 30,
+    "oxidizer": 15
+}
+
+# Incompatible storage categories
+incompatible = [
+    ("flammable", "oxidizer"),
+    ("corrosive", "oxidizer")
+]
+
+chemicals = []
+n = int(input("Enter number of chemicals: "))
+
+for i in range(n):
+    name = input("Chemical name: ")
+    category = input("Category (flammable/corrosive/oxidizer): ").lower()
+    quantity = float(input("Quantity in litres: "))
+
+    chemicals.append((name, category, quantity))
+
+for name, category, quantity in chemicals:
+    valid = True
+
+    if category not in max_quantity:
+        print(name, "- Invalid storage category")
+        continue
+
+    if quantity <= 0 or quantity > max_quantity[category]:
+        valid = False
+        print(name, "- Invalid quantity")
+
+    for other_name, other_category, other_quantity in chemicals:
+        if name != other_name:
+            pair = (category, other_category)
+            reverse_pair = (other_category, category)
+
+            if pair in incompatible or reverse_pair in incompatible:
+                valid = False
+                print(name, "- Incompatible with", other_name)
+
+    if valid:
+        print(name, "- Valid inventory")
+    else:
+        print(name, "- Invalid inventory")
+Enter number of chemicals: 2
+Chemical name: LiquidA
+Category (flammable/corrosive/oxidizer): flammable
+Quantity in litres: 10
+Chemical name: LiquidB
+Category (flammable/corrosive/oxidizer): oxidizer
+Quantity in litres: 5
+LiquidA - Incompatible with LiquidB
+LiquidA - Invalid inventory
+LiquidB - Incompatible with LiquidA
+LiquidB - Invalid inventory

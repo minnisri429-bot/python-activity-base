@@ -1,0 +1,96 @@
+Courier Charge Optimization
+Algorithm
+1. Start.
+2. Enter parcel weight, length, width, height, distance, urgency, and restriction.
+3. Validate the parcel dimensions and weight.
+4. Calculate delivery charges for standard and express services.
+5. Check which services are eligible for the parcel.
+6. Compare the charges and select the cheapest eligible service.
+7. Display the charges and selected service.
+8. Stop.
+Flowchart
+Start
+↓
+Enter weight, dimensions, distance and restrictions
+↓
+Parcel details valid?
+No
+↓
+Display invalid parcel
+
+Yes
+↓
+Calculate service charges
+
+
+Compare eligible courier options
+↓
+Select cheapest eligible service
+↓
+Display charges and selected service
+↓
+Stop
+
+weight = float(input("Enter parcel weight in kg: "))
+length = float(input("Enter length in cm: "))
+width = float(input("Enter width in cm: "))
+height = float(input("Enter height in cm: "))
+distance = float(input("Enter distance in km: "))
+urgency = input("Enter urgency (normal/urgent): ").lower()
+restriction = input("Restricted or hazardous parcel? (yes/no): ").lower()
+
+if (weight <= 0 or length <= 0 or width <= 0 or height <= 0
+        or distance <= 0 or urgency not in ["normal", "urgent"]
+        or restriction not in ["yes", "no"]):
+    print("Invalid parcel details")
+
+elif weight > 20 or length > 100 or width > 100 or height > 100:
+    print("Parcel exceeds size or weight limit")
+
+else:
+    # Distance zone charges
+    if distance <= 50:
+        zone_charge = 50
+    elif distance <= 200:
+        zone_charge = 100
+    else:
+        zone_charge = 200
+
+    # Weight charge
+    weight_charge = weight * 20
+
+    standard = zone_charge + weight_charge
+    express = standard + 100
+
+    if urgency == "urgent":
+        services = [("Express", express)]
+    else:
+        services = [("Standard", standard), ("Express", express)]
+
+    # Express is not allowed for restricted parcels
+    if restriction == "yes":
+        services = [
+            (name, charge) for name, charge in services
+            if name != "Express"
+        ]
+
+    if len(services) == 0:
+        print("No eligible courier service available")
+    else:
+        for name, charge in services:
+            print(name, "charge: Rs.", charge)
+
+        best = min(services, key=lambda item: item[1])
+        print("Selected service:", best[0])
+        print("Final charge: Rs.", best[1])
+Enter parcel weight in kg: 2
+Enter length in cm: 20
+Enter width in cm: 15
+Enter height in cm: 10
+Enter distance in km: 40
+Enter urgency (normal/urgent): normal
+Restricted or hazardous parcel? (yes/no): no
+Standard charge: Rs. 90.0
+Express charge: Rs. 190.0
+Selected service: Standard
+Final charge: Rs. 90.0

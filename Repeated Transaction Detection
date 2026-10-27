@@ -1,0 +1,79 @@
+Repeated Transaction Detection
+Aim: Detect duplicate transaction IDs, identify transactions above a specified amount, and display suspicious entries.
+Algorithm
+1. Start.
+2. Enter the number of transactions.
+3. Enter each transaction ID and amount.
+4. Check for duplicate transaction IDs.
+5. Check whether the amount exceeds the specified limit.
+6. Add suspicious transactions to a list.
+7. Display all suspicious transactions.
+8. Stop.
+Flowchart
+Start
+↓
+Enter transaction IDs and amounts
+↓
+Check duplicate IDs and amount limit
+↓
+Duplicate ID or amount above limit?
+↓
+Yes
+↓
+Add to suspicious list
+
+No
+↓
+Mark as normal
+
+
+Display suspicious transactions
+↓
+Stop
+
+transactions = []
+
+n = int(input("Enter number of transactions: "))
+limit = float(input("Enter amount limit: "))
+
+for i in range(n):
+    tid = input("Enter transaction ID: ")
+    amount = float(input("Enter amount: "))
+    transactions.append((tid, amount))
+
+suspicious = []
+
+for tid, amount in transactions:
+    reasons = []
+
+    # Check whether the ID occurs more than once
+    count = sum(1 for t, a in transactions if t == tid)
+
+    if count > 1:
+        reasons.append("Duplicate ID")
+
+    if amount > limit:
+        reasons.append("Amount exceeds limit")
+
+    if reasons:
+        suspicious.append((tid, amount, reasons))
+
+print("\nSuspicious Transactions:")
+
+if suspicious:
+    for tid, amount, reasons in suspicious:
+        print(tid, amount, "-", ", ".join(reasons))
+else:
+    print("No suspicious transactions found")
+Enter number of transactions: 3
+Enter amount limit: 5000
+Enter transaction ID: T101
+Enter amount: 2000
+Enter transaction ID: T102
+Enter amount: 7000
+Enter transaction ID: T102
+Enter amount: 3000
+
+Suspicious Transactions:
+T102 7000.0 - Duplicate ID, Amount exceeds limit
+T102 3000.0 - Duplicate ID
